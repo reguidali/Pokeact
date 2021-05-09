@@ -7,12 +7,11 @@ function Pokemon() {
     const [state, setState] = useState({});
 
     const onChange = (event) => {
-        const { value } = event.target
-        setPokemonName(value); 
-        console.log(value);
+        const { value } = event.target;
+        getPokemon(value); 
      };
 
-    const getPokemon = async () => { //async = determina q é assíncrono
+    const getPokemon = async (pokemonName) => { //async = determina q é assíncrono
 
         const result = await fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonName).then((response) => { //await = fala que é pra esperar o retorno
             console.log(response);
@@ -25,8 +24,8 @@ function Pokemon() {
     };
 
     useEffect( () => { //só vai atualizar quando tiver alteração
-        getPokemon();
-    },[onChange]);
+        getPokemon("");
+    },[]);
 
     return (
     <header>
@@ -34,7 +33,7 @@ function Pokemon() {
           WHO IS THIS POKEMON?  <input type="text" onChange={onChange} />
         </div>
         <div className='cardPokemon'>
-            <img alt='Pokemonito' src={state.sprites ? state.sprites?.front_default : null}/>
+            <img alt='Pokemon' src={state.sprites ? state.sprites?.front_default : null}/>
             <p>Name: {state.species ? state.species?.name : null} {/*? = só imprima se existir*/}</p>
             <p>Ability: {state.abilities ? state.abilities[1]?.ability?.name : null} {/*? = só imprima se existir*/}</p>
         </div>
