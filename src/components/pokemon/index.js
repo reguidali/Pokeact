@@ -1,8 +1,6 @@
 import { useState,useEffect } from 'react'; 
 
 function Pokemon() {
-    
-    const [pokemonName, setPokemonName] = useState("");
 
     const [state, setState] = useState({});
 
@@ -27,17 +25,22 @@ function Pokemon() {
         getPokemon("");
     },[]);
 
+    const pokemonType = state.types ? state.types[0]?.type?.name : null;
     return (
-    <header>
-        <div className='searchPokemon'>
-          WHO IS THIS POKEMON?  <input type="text" onChange={onChange} />
+        <div>
+            <div className='searchPokemon'>
+            WHO IS THIS POKEMON?  <input type="text" onChange={onChange} />
+            </div>
+            <div className="pokeCard">
+                <pokeColor className={pokemonType}>
+                <pokeId>#{state.id ? state.id : null}</pokeId>
+                <img alt='Pokemon' src={state.sprites ? state.sprites?.front_default : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'}/>
+                </pokeColor>
+                <p className='pokeName'>{state.species ? state.species?.name : null} {/*? = só imprima se existir*/}</p>
+                <div className={'pokeType ' + pokemonType}>{pokemonType}</div>
+                <p>Ability: {state.abilities ? state.abilities[1]?.ability?.name : null} {/*? = só imprima se existir*/}</p>
+            </div>
         </div>
-        <div className='cardPokemon'>
-            <img alt='Pokemon' src={state.sprites ? state.sprites?.front_default : null}/>
-            <p>Name: {state.species ? state.species?.name : null} {/*? = só imprima se existir*/}</p>
-            <p>Ability: {state.abilities ? state.abilities[1]?.ability?.name : null} {/*? = só imprima se existir*/}</p>
-        </div>
-    </header>
     );
   }
   
